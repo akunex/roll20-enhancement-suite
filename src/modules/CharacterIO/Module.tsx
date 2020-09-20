@@ -71,23 +71,29 @@ class CharacterIOModule extends R20Module.OnAppLoadBase {
         let plsWait = new LoadingDialog("Importing");
         plsWait.show();
 
-        const handle = input.files[0];
+        //const handle = input.files[0];
         
-        const promise = readFile(handle)
-            .then(CharacterIOModule.processData)
-            .then(payload => {
-                let pc = R20.createCharacter();
-                console.log(pc);
-                console.log(payload);
-                const result = payload.strategy.overwrite(pc, payload.data);
-                if(result.isErr()) {
-                    this.catchError(result.err().unwrap());
-                    pc.destroy();
-                }
-            })
-            .catch(this.catchError);
+        for (var x = 0; x < input.files.length; x++) {
 
-        (promise as any).finally(plsWait.dispose);
+            const handle = input.files[x];
+
+            const promise = readFile(handle)
+                .then(CharacterIOModule.processData)
+                .then(payload => {
+                    let pc = R20.createCharacter();
+                    console.log(pc);
+                    console.log(payload);
+                    const result = payload.strategy.overwrite(pc, payload.data);
+                    if(result.isErr()) {
+                        this.catchError(result.err().unwrap());
+                        pc.destroy();
+                    }
+                })
+                .catch(this.catchError);
+
+            (promise as any).finally(plsWait.dispose);
+
+        }
 
         input.value = "";
         e.target.disabled = true;
@@ -112,6 +118,7 @@ class CharacterIOModule extends R20Module.OnAppLoadBase {
                     type="file"
                     style={{ width: "95%" }}
                     onChange={this.onJournalFileChange}
+                    multiple="multiple"
                 />
 
                 <button disabled className="btn" style={{ display: "block", float: "left", width: "90%", marginBottom: "10px" }} onClick={this.onImportClick}>
