@@ -70,8 +70,6 @@ class CharacterIOModule extends R20Module.OnAppLoadBase {
 
         let plsWait = new LoadingDialog("Importing");
         plsWait.show();
-
-        //const handle = input.files[0];
         
         for (var x = 0; x < input.files.length; x++) {
 

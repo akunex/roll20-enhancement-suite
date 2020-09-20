@@ -90,7 +90,7 @@ module.exports = (_env, argv) => {
             process.exit(1);
         }*/
 
-        prep source code
+        //prep source code
         const filename = `r20es_${git.version}_source.zip`;
         shell.exec(`git archive -o ${filename} HEAD ":(exclude)page"`);
 
@@ -104,7 +104,7 @@ module.exports = (_env, argv) => {
             });
         });
 
-        prep deploy data
+        //prep deploy data
         const deployData = {
             version: VersionNameGen(git.version)
         };
