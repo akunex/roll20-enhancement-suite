@@ -59,7 +59,7 @@ module.exports = (_env, argv) => {
 
     const isPackaging = isInRepo && isProd && wantsZip;
     if (isPackaging) {
-        const gitState = shell.exec("git diff-index --quiet HEAD -- && true");
+      /* const gitState = shell.exec("git diff-index --quiet HEAD -- && true");
         if(gitState.code !== 0) {
             console.error("Uncommited changes found in the working directory.");
             console.error("Packaging is not allowed.");
@@ -88,9 +88,9 @@ module.exports = (_env, argv) => {
             console.error(`There are ${numCommitsSinceLastTag} commits since the last tag (${gitLastTag}).`);
             console.error(`Tag a new release before packaging.`);
             process.exit(1);
-        }
+        }*/
 
-        // prep source code
+        prep source code
         const filename = `r20es_${git.version}_source.zip`;
         shell.exec(`git archive -o ${filename} HEAD ":(exclude)page"`);
 
@@ -104,7 +104,7 @@ module.exports = (_env, argv) => {
             });
         });
 
-        // prep deploy data
+        prep deploy data
         const deployData = {
             version: VersionNameGen(git.version)
         };
